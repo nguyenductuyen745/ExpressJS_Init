@@ -30,6 +30,16 @@ CourseSchema.query.sortable = function (req) {
   return this;
 };
 
+CourseSchema.query.paginationable = function (res) {
+  if ('_pagination' in res.locals) {
+    const { pageIndex, limit } = res.locals._pagination;
+    const skip = (pageIndex - 1) * limit;
+
+    this.skip(skip).limit(limit); // Get paginated data
+  }
+  return this;
+};
+
 // Plugin
 mongoose.plugin(slug);
 CourseSchema.plugin(AutoIncrement);

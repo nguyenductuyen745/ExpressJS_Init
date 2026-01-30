@@ -6,10 +6,12 @@ class MeController {
   async storedCourse(req, res, next) {
     try {
       Promise.all([
-        Course.find({}).sortable(req),
+        Course.find({}).sortable(req).paginationable(res),
         Course.countDocumentsDeleted(),
-      ]).then(([courses, deletedCount]) => {
+        Course.countDocuments(),
+      ]).then(([courses, deletedCount, totalCount]) => {
         res.render('me/stored-courses', {
+          totalCount,
           deletedCount,
           courses: mongooseToOject(courses),
         });

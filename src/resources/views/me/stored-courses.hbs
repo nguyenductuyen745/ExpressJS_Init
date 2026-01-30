@@ -1,14 +1,15 @@
-<form method='POST' action='/courses/handle-form-actions' class='mt-4 container-form'>
+<form
+  method='POST'
+  action='/courses/handle-form-actions'
+  class='mt-4 container-form'
+>
   <div class='d-flex justify-content-between align-items-center'>
     <h1>Khoa Hoc Cua Toi</h1>
     <div>
-      <a href='/me/trash/courses' class="d-inline-block me-4">
+      <a href='/me/trash/courses' class='d-inline-block me-4'>
         Thùng rác ({{deletedCount}})
       </a>
-      <a
-        href='/courses/create'
-        class='text-decoration-none'
-      >
+      <a href='/courses/create' class='text-decoration-none'>
         <button type='button' class='btn btn-primary'>Them khoa hoc</button>
       </a>
     </div>
@@ -27,7 +28,7 @@
       </label>
     </div>
     <select class='form-select form-select-sm' name='action' required>
-      <option value="">--Chon hanh dong--</option>
+      <option value=''>--Chon hanh dong--</option>
       <option value='delete'>Xoa</option>
     </select>
     <button
@@ -45,7 +46,8 @@
           {{sortable 'name' _sort}}
         </th>
         <th scope='col'>Trinh do {{sortable 'level' _sort}}</th>
-        <th scope='col' colspan='2'>Thoi gian tao {{sortable 'createdAt' _sort}}</th>
+        <th scope='col' colspan='2'>Thoi gian tao
+          {{sortable 'createdAt' _sort}}</th>
       </tr>
     </thead>
     <tbody>
@@ -84,6 +86,7 @@
       {{/each}}
     </tbody>
   </table>
+  {{paginationable totalCount _pagination}}
 </form>
 
 {{! Confirm Delete Course Dialog }}
@@ -121,47 +124,23 @@
 </div>
 
 <script>
-  document.addEventListener(
-  'DOMContentLoaded', function() {
-    var courseId;
-    var btnDeleteCourse = document.getElementById('btn-delete-course');
-    var checkboxAll = $('#checkbox-all');
-    var courseItemCheckbox = $("input[name='courseIds[]']");
-    var checkAllSubmitBtn = $('.check-all-submit-btn');
-    var containerForm = $('.container-form');
-
-    $('#deleteCourseModal').on('show.bs.modal', function(event) {
-      var button = $(event.relatedTarget);
-      courseId = button.data('id')
-    });
-    btnDeleteCourse.onclick = function() {
-      const deleteForm = document.getElementById('delete-course-form');
-      deleteForm.action = `/courses/${courseId}?_method=DELETE`;
-      deleteForm.submit();
-    }
-    
-    checkboxAll.change(function() {
-      const isChecked = $(this).prop('checked');
-
-      courseItemCheckbox.prop('checked', isChecked);
-      renderCheckAllSubmitBtn();
-    });
-
-    courseItemCheckbox.change(function() {
-      var isCheckedAll = courseItemCheckbox.length === $("input[name='courseIds[]']:checked").length;
-
-      checkboxAll.prop('checked', isCheckedAll);
-      renderCheckAllSubmitBtn();
-    });
-
-    function renderCheckAllSubmitBtn() {
-      var checkedCount = $("input[name='courseIds[]']:checked").length;
-  
-      if (checkedCount) {
-        checkAllSubmitBtn.removeClass('disabled');
-      } else {
-        checkAllSubmitBtn.addClass('disabled');
-      }
-    }
-  })
+  document.addEventListener( 'DOMContentLoaded', function() { var courseId; var
+  btnDeleteCourse = document.getElementById('btn-delete-course'); var
+  checkboxAll = $('#checkbox-all'); var courseItemCheckbox =
+  $("input[name='courseIds[]']"); var checkAllSubmitBtn =
+  $('.check-all-submit-btn'); var containerForm = $('.container-form');
+  $('#deleteCourseModal').on('show.bs.modal', function(event) { var button =
+  $(event.relatedTarget); courseId = button.data('id') });
+  btnDeleteCourse.onclick = function() { const deleteForm =
+  document.getElementById('delete-course-form'); deleteForm.action =
+  `/courses/${courseId}?_method=DELETE`; deleteForm.submit(); }
+  checkboxAll.change(function() { const isChecked = $(this).prop('checked');
+  courseItemCheckbox.prop('checked', isChecked); renderCheckAllSubmitBtn(); });
+  courseItemCheckbox.change(function() { var isCheckedAll =
+  courseItemCheckbox.length === $("input[name='courseIds[]']:checked").length;
+  checkboxAll.prop('checked', isCheckedAll); renderCheckAllSubmitBtn(); });
+  function renderCheckAllSubmitBtn() { var checkedCount =
+  $("input[name='courseIds[]']:checked").length; if (checkedCount) {
+  checkAllSubmitBtn.removeClass('disabled'); } else {
+  checkAllSubmitBtn.addClass('disabled'); } } })
 </script>

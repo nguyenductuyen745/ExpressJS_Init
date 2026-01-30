@@ -12,6 +12,7 @@ const sortMiddleware = require('./app/middlewares/SortMiddleware');
 
 const route = require('./routes');
 const db = require('./config/db');
+const paginationMiddleware = require('./app/middlewares/paginationMiddleware');
 
 // Connect to DB
 db.connect();
@@ -25,6 +26,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // Custom Middleware
 app.use(sortMiddleware);
+app.use(paginationMiddleware);
 
 // Templates engine
 app.engine(
