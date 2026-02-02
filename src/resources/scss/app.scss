@@ -7,4 +7,14 @@
       margin: 0 16px;
     }
   }
+  .pagination-nav {
+    display: flex;
+    justify-content: flex-end;
+
+    .form-select {
+      width: fit-content;
+      height: fit-content;
+      margin-right: 15px;
+    }
+  }
 }

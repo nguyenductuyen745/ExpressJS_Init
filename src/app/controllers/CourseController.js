@@ -1,5 +1,4 @@
-const { message } = require('statuses');
-const { mongooseToOject } = require('../../util/mongoose');
+const { mongooseToOject } = require('../../utils/mongoose');
 const Course = require('../models/Course');
 
 class CourseController {

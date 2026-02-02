@@ -1,4 +1,4 @@
-const { mongooseToOject } = require('../../util/mongoose');
+const { mongooseToOject } = require('../../utils/mongoose');
 const Course = require('../models/Course');
 
 class MeController {
@@ -24,9 +24,15 @@ class MeController {
   // [GET] /me/trash/courses
   async trashCourse(req, res) {
     try {
-      const courses = mongooseToOject(await Course.findDeleted());
-
-      res.render('me/trash-courses', { courses });
+      Promise.all([
+        Course.findDeleted().paginationable(res),
+        Course.countDocumentsDeleted(),
+      ]).then(([courses, totalCount]) => {
+        res.render('me/trash-courses', {
+          courses: mongooseToOject(courses),
+          totalCount,
+        });
+      });
     } catch (error) {
       next(error);
     }

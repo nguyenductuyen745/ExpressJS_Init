@@ -1,6 +1,7 @@
 const dayjs = require('dayjs');
 const Handlebars = require('handlebars');
-const { DATE_FORMAT } = require('../constants');
+const { DATE_FORMAT, DEFAULT_PAGE_INDEX, LIMIT_LIST } = require('../constants');
+const { mergeQuery } = require('../utils/mergeQuery');
 
 // Sum
 const sum = (a, b) => a + b;
@@ -11,7 +12,7 @@ const dateFormater = (date) => {
 };
 
 // Sortable
-const sortable = (field, sort) => {
+const sortable = (field, { column, type, query }) => {
   const icons = {
     default: 'bi bi-funnel-fill',
     asc: 'bi bi-sort-down-alt',
@@ -23,13 +24,22 @@ const sortable = (field, sort) => {
     desc: 'asc',
   };
 
-  const sortType = field === sort.column ? sort.type : 'default';
+  const sortType = field === column ? type : 'default';
   const icon = icons[sortType];
   const newType = types[sortType];
+  const sortQuery = {
+    _sort: '',
+    column: field,
+    type: newType,
+  };
 
-  const href = Handlebars.escapeExpression(
-    `?_sort&column=${field}&type=${newType}`,
-  );
+  if (query.pageIndex) {
+    Object.assign(sortQuery, {
+      pageIndex: DEFAULT_PAGE_INDEX,
+    });
+  }
+
+  const href = Handlebars.escapeExpression(mergeQuery(query, sortQuery));
 
   return new Handlebars.SafeString(`
       <a href='${href}'><i class="${icon}"></i></a>
@@ -37,7 +47,7 @@ const sortable = (field, sort) => {
 };
 
 // Paginationable
-const paginationable = (totalCount, { pageIndex, limit }) => {
+const paginationable = (totalCount, { pageIndex, limit, query }) => {
   const pageIndexs = Array.from(
     { length: Math.ceil(totalCount / limit) },
     (_, i) => i + 1,
@@ -51,7 +61,7 @@ const paginationable = (totalCount, { pageIndex, limit }) => {
     .map(
       (item) => `
       <li class="page-item ${item === pageIndex ? 'active' : ''}">
-        <a class="page-link" href="?pageIndex=${item}">
+        <a class="page-link" href='${mergeQuery(query, { pageIndex: item })}'>
           ${item}
         </a>
       </li>
@@ -59,19 +69,25 @@ const paginationable = (totalCount, { pageIndex, limit }) => {
     )
     .join('');
 
+  const optionSizeHtml = LIMIT_LIST.map(
+    (item) =>
+      `<option ${item.name === limit ? 'selected' : ''} value='${mergeQuery(query, { pageIndex: 1, limit: item.name })}'>${item.name}</option>`,
+  );
+
   return new Handlebars.SafeString(`
-      <nav aria-label='Page navigation example'>
+      <nav class='pagination-nav mt-4'>
+        <select name='limit' class="form-select" onChange="window.location.href=this.value">
+          ${optionSizeHtml}
+        </select>
         <ul class='pagination'>
           <li class='page-item ${prePageDisabled ? 'disabled' : ''}'><a
             class='page-link'
-            href='?pageIndex=${prePageIndex}'
+            href='${mergeQuery(query, { pageIndex: prePageIndex })}'
           >Previous</a></li>
-            
           ${pagesHtml}
-
           <li class='page-item'><a
             class='page-link ${nextPageDisabled ? 'disabled' : ''}'
-            href='?pageIndex=${nextPageIndex}'
+            href='${mergeQuery(query, { pageIndex: nextPageIndex })}'
           >Next</a></li>
         </ul>
       </nav>

@@ -2,6 +2,7 @@ module.exports = function sortMiddleware(req, res, next) {
   res.locals._sort = {
     enabled: false,
     type: 'default',
+    query: req.query,
   };
 
   if ('_sort' in req.query) {
