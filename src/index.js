@@ -14,6 +14,9 @@ const route = require('./routes');
 const db = require('./config/db');
 const paginationMiddleware = require('./app/middlewares/paginationMiddleware');
 
+// Dot ENV start
+require('dotenv').config();
+
 // Connect to DB
 db.connect();
 
