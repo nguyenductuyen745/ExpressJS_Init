@@ -5,7 +5,6 @@ const methodOverride = require('method-override');
 const { engine } = require('express-handlebars');
 
 const app = express();
-const port = 3000;
 
 const handlebars = require('./helpers/handlebars');
 const sortMiddleware = require('./app/middlewares/SortMiddleware');
@@ -51,6 +50,11 @@ app.use(express.json());
 // Route init
 route(app);
 
-app.listen(port, () => {
-  console.log(`App listening on port ${port}`);
-});
+if (process.env.NODE_ENV !== 'production') {
+  const port = 3000;
+  app.listen(port, () => {
+    console.log(`App listening on port ${port}`);
+  });
+}
+
+module.exports = app;
