@@ -2,10 +2,13 @@ const mongoose = require('mongoose');
 
 async function connect() {
   try {
-    await mongoose.connect(process.env.MONGODB_URI_CLOUD, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    });
+    await mongoose.connect(
+      'mongodb+srv://nguyenductuyen745_db_user:epsThPE7WcQHOz1F@express-course-db.xkop1is.mongodb.net/',
+      {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      },
+    );
     console.log('Connect Successfully!!!');
   } catch (error) {
     console.log('Connect Error!!!', error);
