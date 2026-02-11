@@ -1,0 +1,13 @@
+.app .course-select-action-wrap .form-select {
+  width: 200px;
+  margin: 0 16px;
+}
+.app .pagination-nav {
+  display: flex;
+  justify-content: flex-end;
+}
+.app .pagination-nav .form-select {
+  width: fit-content;
+  height: fit-content;
+  margin-right: 15px;
+}
