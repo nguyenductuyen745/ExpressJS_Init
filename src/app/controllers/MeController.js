@@ -5,16 +5,16 @@ class MeController {
   // [GET] /me/stored/courses
   async storedCourse(req, res, next) {
     try {
-      Promise.all([
+      const [courses, deletedCount, totalCount] = await Promise.all([
         Course.find({}).sortable(req).paginationable(res),
         Course.countDocumentsDeleted(),
         Course.countDocuments(),
-      ]).then(([courses, deletedCount, totalCount]) => {
-        res.render('me/stored-courses', {
-          totalCount,
-          deletedCount,
-          courses: mongooseToOject(courses),
-        });
+      ]);
+
+      res.render('me/stored-courses', {
+        totalCount,
+        deletedCount,
+        courses: mongooseToOject(courses),
       });
     } catch (error) {
       next(error);
@@ -22,16 +22,16 @@ class MeController {
   }
 
   // [GET] /me/trash/courses
-  async trashCourse(req, res) {
+  async trashCourse(req, res, next) {
     try {
-      Promise.all([
+      const [courses, totalCount] = await Promise.all([
         Course.findDeleted().paginationable(res),
         Course.countDocumentsDeleted(),
-      ]).then(([courses, totalCount]) => {
-        res.render('me/trash-courses', {
-          courses: mongooseToOject(courses),
-          totalCount,
-        });
+      ]);
+
+      res.render('me/trash-courses', {
+        courses: mongooseToOject(courses),
+        totalCount,
       });
     } catch (error) {
       next(error);
