@@ -1,11 +1,14 @@
 **Hi guys 👋**
+
 You can visit this project here: https://express-course-eight.vercel.app/
 You can now buy me a coffee!: https://www.buymeacoffee.com/TuyenNguyen
 
 **Project Summary**
+
 This is a Course Learning Platform backend built with Node.js and Express:
 
 🏗️ **Architecture**
+
 Framework: Express.js (Node.js)
 Database: MongoDB with Mongoose ODM and MongoDB Atlas
 View Engine: Handlebars (hbs)
@@ -13,6 +16,7 @@ Styling: SCSS
 Logging: Morgan
 
 📚 **Core Features**
+
 1. Course Management
 Create, Read, Update, Delete (CRUD) operations for courses
 Soft delete functionality (courses can be moved to trash)
@@ -33,6 +37,7 @@ View trashed courses separately
 Display course statistics (total count, deleted count)
 
 🛣️ **Route Structure**
+
 /courses - Course CRUD operations
 /me/stored/courses - View user's saved courses
 /me/trash/courses - View deleted courses
@@ -40,6 +45,7 @@ Display course statistics (total count, deleted count)
 / - Site/home routes
 
 🔧 **Key Technologies**
+
 mongoose-slug-updater (auto-generate URL slugs)
 mongoose-delete (soft delete support)
 mongoose-sequence (auto-increment IDs)
@@ -47,6 +53,7 @@ Body-parser & method-override (HTTP handling)
 dotenv (environment variables)
 
 📁 **Project Structure**
+
 Well-organized with separation of concerns:
 Controllers for business logic
 Models for database schemas
