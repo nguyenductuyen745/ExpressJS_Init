@@ -17,4 +17,35 @@
       margin-right: 15px;
     }
   }
+
+  .hero-section {
+    animation: fadeIn 1s ease-in-out;
+  }
+  .courses-section {
+    animation: slideUp 1s ease-in-out 0.5s both;
+  }
+  .card:hover {
+    transform: scale(1.05);
+  }
+  .cta-section {
+    animation: fadeIn 1s ease-in-out 1s both;
+  }
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  @keyframes slideUp {
+    from {
+      transform: translateY(50px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
 }
