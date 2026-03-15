@@ -3,6 +3,9 @@ const Handlebars = require('handlebars');
 const { DATE_FORMAT, DEFAULT_PAGE_INDEX, LIMIT_LIST } = require('../constants');
 const { mergeQuery } = require('../utils/mergeQuery');
 
+// Equal
+const eq = (a, b) => a === b;
+
 // Sum
 const sum = (a, b) => a + b;
 
@@ -61,7 +64,7 @@ const paginationable = (totalCount, { pageIndex, limit, query }) => {
     .map(
       (item) => `
       <li class="page-item ${item === pageIndex ? 'active' : ''}">
-        <a class="page-link" href='${mergeQuery(query, { pageIndex: item })}'>
+        <a class="page-link" href='${mergeQuery(query, { pageIndex: item })}' aria-label="Trang ${item}">
           ${item}
         </a>
       </li>
@@ -75,26 +78,32 @@ const paginationable = (totalCount, { pageIndex, limit, query }) => {
   );
 
   return new Handlebars.SafeString(`
-      <nav class='pagination-nav mt-4'>
-        <select name='limit' class="form-select" onChange="window.location.href=this.value">
-          ${optionSizeHtml}
-        </select>
-        <ul class='pagination'>
+      <nav class='d-flex justify-content-between align-items-center mt-4' aria-label="Điều hướng trang">
+        <div class="d-flex align-items-center">
+          <label for="limit-select" class="me-2 fw-bold text-muted">Hiển thị:</label>
+          <select id="limit-select" name='limit' class="form-select form-select-sm" onChange="window.location.href=this.value" style="width: auto;">
+            ${optionSizeHtml}
+          </select>
+        </div>
+        <ul class='pagination mb-0'>
           <li class='page-item ${prePageDisabled ? 'disabled' : ''}'><a
             class='page-link'
-            href='${mergeQuery(query, { pageIndex: prePageIndex })}'
-          >Previous</a></li>
+            href='${prePageDisabled ? '#' : mergeQuery(query, { pageIndex: prePageIndex })}'
+            aria-label="Trang trước"
+          ><i class="fas fa-chevron-left"></i> Trước</a></li>
           ${pagesHtml}
-          <li class='page-item'><a
-            class='page-link ${nextPageDisabled ? 'disabled' : ''}'
-            href='${mergeQuery(query, { pageIndex: nextPageIndex })}'
-          >Next</a></li>
+          <li class='page-item ${nextPageDisabled ? 'disabled' : ''}'><a
+            class='page-link'
+            href='${nextPageDisabled ? '#' : mergeQuery(query, { pageIndex: nextPageIndex })}'
+            aria-label="Trang sau"
+          >Sau <i class="fas fa-chevron-right"></i></a></li>
         </ul>
       </nav>
     `);
 };
 
 module.exports = {
+  eq,
   sum,
   dateFormater,
   sortable,

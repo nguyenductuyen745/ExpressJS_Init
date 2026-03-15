@@ -1,18 +1,53 @@
-<div class='my-4'>
-  <div class='row'>
-    <div class='col-3'><button>Hoc Ngay</button></div>
-    <div class='col-9'>
-      <iframe
-        width='560'
-        height='315'
-        src='https://www.youtube.com/embed/{{course.videoId}}'
-        title='YouTube video player'
-        frameborder='0'
-        allow='accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share'
-        referrerpolicy='strict-origin-when-cross-origin'
-      ></iframe>
-      <h1 class="mt-3 mb-3">{{course.name}}</h1>
-      <p>{{course.description}}</p>
+<div class="neo-wrapper py-5">
+  <div class="container">
+    <div class="neo-header mb-5 animate__animated animate__backInDown">
+      <h1 class="display-1 fw-black text-uppercase shadow-text">{{course.name}}</h1>
+      <div class="d-inline-block bg-warning px-4 py-2 border border-4 border-dark fw-bold mt-2">
+        LEVEL: {{course.level}}
+      </div>
+    </div>
+
+    <div class="row g-5">
+      <div class="col-lg-7">
+        <div class="neo-video-card border border-5 border-dark bg-white shadow-hard">
+          <div class="ratio ratio-16x9">
+            <iframe src="https://www.youtube.com/embed/{{course.videoId}}" title="Course Video" frameborder="0"
+              allowfullscreen></iframe>
+          </div>
+          <div class="p-3 border-top border-5 border-dark bg-info fw-bold">
+            <marquee scrollamount="10">ĐANG PHÁT: {{course.name}} • THỜI LƯỢNG: 45 PHÚT • GIẢNG VIÊN: TTT • </marquee>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-5">
+        <div class="neo-info-card border border-5 border-dark bg-white p-4 shadow-hard-lg mb-4">
+          <h3 class="fw-bold mb-3">TẠI SAO NÊN HỌC?</h3>
+          <p class="fs-5 lh-base mb-4">{{course.description}}</p>
+
+          <ul class="list-unstyled fw-bold">
+            <li class="mb-2"><i class="bi bi-check-lg bg-success text-white border border-2 border-dark me-2"></i> 100%
+              MIỄN PHÍ</li>
+            <li class="mb-2"><i class="bi bi-check-lg bg-success text-white border border-2 border-dark me-2"></i> TRUY
+              CẬP TRỌN ĐỜI</li>
+            <li class="mb-2"><i class="bi bi-check-lg bg-success text-white border border-2 border-dark me-2"></i> CÓ
+              BÀI TẬP THỰC HÀNH</li>
+          </ul>
+        </div>
+
+        <a href="#" class="neo-btn-primary w-100 text-center text-decoration-none d-block py-4 mb-3">
+          BẮT ĐẦU HỌC NGAY!
+        </a>
+
+        <div class="row g-3">
+          <div class="col-6">
+            <button class="neo-btn-secondary w-100 py-3">CHIA SẺ</button>
+          </div>
+          <div class="col-6">
+            <button class="neo-btn-secondary w-100 py-3">LƯU LẠI</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

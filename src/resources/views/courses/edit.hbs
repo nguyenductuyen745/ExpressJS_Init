@@ -1,45 +1,72 @@
-<div>
-  <h1 class='my-4'>Cap Nhat Khoa Hoc</h1>
-
-  <form method='POST' action='/courses/{{course._id}}?_method=PUT'>
-    <div class='form-group mt-3'>
-      <label for='name'>Ten khoa hoc</label>
-      <input
-        type='text'
-        name='name'
-        value='{{course.name}}'
-        class='form-control mt-2'
-        id='name'
-      />
+<div class="container my-5 py-5">
+  <div class="card-form">
+    <div class="card-header text-center">
+      <h4 class="mb-4">Cap Nhat Khoa Hoc</h4>
     </div>
-    <div class='form-group mt-3'>
-      <label for='description'>Mo ta</label>
-      <textarea
-        name='description'
-        class='form-control mt-2'
-        id='description'
-      >{{course.description}}</textarea>
+    <div class="card-body">
+      <form method="POST" action='/courses/{{course._id}}?_method=PUT' class="needs-validation" novalidate>
+        <div class="row">
+          <div class="col-md-6 mb-3">
+            <label for="name" class="form-label">Tên khóa học</label>
+            <input type="text" class="form-control" value='{{course.name}}' name="name" id="name"
+              placeholder="Nhập tên khóa học" required>
+            <div class="invalid-feedback">
+              Vui lòng nhập tên khóa học.
+            </div>
+          </div>
+          <div class="col-md-6 mb-3">
+            <label for="level" class="form-label">Trình độ</label>
+            {{course.level}}
+            <select class="form-select" name="level" id="level" required>
+              <option value="">Chọn trình độ</option>
+              <option value="Co ban" {{#if (eq course.level 'Co ban' )}}selected{{/if}}>Cơ bản</option>
+              <option value="Trung cap" {{#if (eq course.level 'Trung cap' )}}selected{{/if}}>Trung cấp</option>
+              <option value="Nang cao" {{#if (eq course.level 'Nang cao' )}}selected{{/if}}>Nâng cao</option>
+            </select>
+            <div class="invalid-feedback">
+              Vui lòng chọn trình độ.
+            </div>
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="description" class="form-label">Mô tả</label>
+          <textarea class="form-control" name="description" id="description" rows="3"
+            placeholder="Mô tả khóa học" required>{{course.description}}</textarea>
+          <div class="invalid-feedback">
+            Vui lòng nhập mô tả.
+          </div>
+        </div>
+        <div class="mb-3">
+          <label for="videoId" class="form-label">Video ID</label>
+          <input type="text" class="form-control" value='{{course.videoId}}' name="videoId" id="videoId"
+            placeholder="ID video YouTube" required>
+          <div class="invalid-feedback">
+            Vui lòng nhập ID video.
+          </div>
+        </div>
+        <div class="d-flex justify-content-between">
+          <a href="/courses" class="btn btn-secondary">Quay lại</a>
+          <button type="submit" class="btn btn-primary">Cập Nhật Khóa Học</button>
+        </div>
+      </form>
     </div>
-    <div class='form-group mt-3'>
-      <label for='videoId'>Video ID</label>
-      <input
-        type='text'
-        name='videoId'
-        value='{{course.videoId}}'
-        class='form-control mt-2'
-        id='videoId'
-      />
-    </div>
-    <div class='form-group mt-3'>
-      <label for='level'>Trinh do</label>
-      <input
-        type='text'
-        name='level'
-        value='{{course.level}}'
-        class='form-control mt-2'
-        id='level'
-      />
-    </div>
-    <button type='submit' class='btn btn-primary mt-4'>Cap nhat khoa hoc</button>
-  </form>
+  </div>
 </div>
+
+<script>
+  // Bootstrap form validation
+  (function () {
+    'use strict'
+    var forms = document.querySelectorAll('.needs-validation')
+    Array.prototype.slice.call(forms)
+      .forEach(function (form) {
+        form.addEventListener('submit', function (event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
